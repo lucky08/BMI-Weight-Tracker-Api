@@ -1,0 +1,6 @@
+.vscode
+.idea
+/node_modules
+.env
+.DS_Store
+/other/invite-link-generator/node_modules/
