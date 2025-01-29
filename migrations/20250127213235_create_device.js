@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("device_information", function (table) {
+  return knex.schema.createTable("device", function (table) {
     table.bigincrements("id").primary();
 
     table.string("uuid", 255).notNullable();
@@ -13,6 +13,7 @@ exports.up = function (knex) {
     table.string("os_version", 200);
     table.string("platform", 200);
     table.string("web_view_version", 200);
+    table.string("manufacturer", 200);
   });
 };
 
@@ -21,5 +22,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("device_information");
+  return knex.schema.dropTableIfExists("device");
 };

@@ -4,6 +4,8 @@ const process = require("process");
 const app = express();
 require("dotenv").config();
 
+const deviceRoutes = require("./functions/device/src/routes/device");
+
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));
 
@@ -27,6 +29,8 @@ app.use((req, res, next) => {
     console.log(req.body);
   next();
 });
+
+app.use("/device", deviceRoutes);
 
 if (process.env.PORT) {
   app.listen(process.env.PORT);
