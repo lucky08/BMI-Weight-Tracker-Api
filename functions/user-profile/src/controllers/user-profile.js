@@ -51,3 +51,25 @@ module.exports.create = async (req, res) => {
       .send(JSON.parse("Error while creating user profile by id."));
   }
 };
+
+module.exports.update = async (req, res) => {
+  try {
+    const { userName, age, gender, height, uuid } = req.body;
+
+    const userProfile = new UserProfile({
+      userName,
+      age,
+      gender,
+      height,
+      uuid,
+    });
+
+    const updatedUserProfile = await UserProfile.updateByUuid(userProfile);
+    return res.status(201).send(updatedUserProfile);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .send(JSON.parse("Error while updating user profile by id."));
+  }
+};

@@ -88,4 +88,31 @@ UserProfile.create = async (newUserProfile) => {
   }
 };
 
+UserProfile.updateByUuid = async (updatedUserProfile) => {
+  let conn;
+
+  try {
+    conn = await getConnection();
+    const query = `UPDATE user_profile
+                    SET
+                      user_name = ?,
+                      age = ?,
+                      gender = ?,
+                      height = ?
+                    WHERE uuid = ?;`;
+
+    await conn.query(query, [
+      updatedUserProfile.userName,
+      updatedUserProfile.age,
+      updatedUserProfile.gender,
+      updatedUserProfile.height,
+      updatedUserProfile.uuid,
+    ]);
+
+    return updatedUserProfile;
+  } finally {
+    if (conn) await conn.release();
+  }
+};
+
 module.exports = UserProfile;

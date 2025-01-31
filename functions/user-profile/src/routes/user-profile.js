@@ -9,4 +9,6 @@ router.get("/:uuid", UserProfileController.findOneByUuid);
 
 router.post("/", UserProfileController.create);
 
+router.patch("/", UserProfileController.update);
+
 module.exports = router;
