@@ -66,7 +66,7 @@ Setting.updateByUuid = async (updatedSetting) => {
     const query = `UPDATE setting
                     SET
                       unit = ?,
-                      dark_mode = ?,
+                      dark_mode = ?
                     WHERE uuid = ?;`;
 
     await conn.query(query, [
