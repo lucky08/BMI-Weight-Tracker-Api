@@ -7,6 +7,7 @@ const app = express();
 app.use(awsServerlessExpressMiddleware.eventContext());
 
 const deviceRoutes = require("./routes/device");
+const settingRoutes = require("./routes/setting");
 
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));
@@ -39,6 +40,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/device", deviceRoutes);
+app.use("/setting", settingRoutes);
 
 if (process.env.PORT) {
   app.listen(process.env.PORT);
