@@ -12,7 +12,7 @@ exports.up = function (knex) {
       table.string("user_name", 255).notNullable();
       table.bigInteger("age");
       table.string("gender", 200);
-      table.bigInteger("height");
+      table.float("height");
       table
         .string("uuid", 255)
         .notNullable()

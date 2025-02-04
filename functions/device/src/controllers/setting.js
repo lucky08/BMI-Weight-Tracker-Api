@@ -29,6 +29,7 @@ module.exports.create = async (req, res) => {
     });
 
     const createdSetting = await Setting.create(setting);
+
     return res.status(201).send(createdSetting);
   } catch (err) {
     console.log(err);
