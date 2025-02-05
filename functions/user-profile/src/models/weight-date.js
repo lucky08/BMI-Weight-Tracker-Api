@@ -18,7 +18,7 @@ WeightDate.getAllByUserProfileId = async (userProfileId) => {
                     weight,
                     date_time AS dateTime,
                     user_profile_id AS userProfileId
-                  FROM user_profile
+                  FROM weight_date
                   WHERE user_profile_id = ?;`;
 
     const rows = await conn.query(query, [userProfileId]);

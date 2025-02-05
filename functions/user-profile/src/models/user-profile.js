@@ -55,6 +55,29 @@ UserProfile.findByUuid = async (uuid) => {
   }
 };
 
+UserProfile.findById = async (id) => {
+  let conn;
+  try {
+    conn = await getConnection();
+
+    const query = `SELECT
+                    id,
+                    user_name AS userName,
+                    age,
+                    gender,
+                    height,
+                    uuid
+                  FROM user_profile
+                  WHERE id = ?;`;
+
+    const rows = await conn.query(query, [id]);
+    const [userProfile] = rows;
+    return userProfile;
+  } finally {
+    if (conn) await conn.release();
+  }
+};
+
 UserProfile.create = async (newUserProfile) => {
   let conn;
   try {
