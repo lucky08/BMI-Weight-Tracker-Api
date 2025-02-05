@@ -35,7 +35,7 @@ WeightDate.create = async (newWeightDate) => {
     conn = await getConnection();
 
     const query = `INSERT INTO weight_date(weight, date_time, user_profile_id)
-                        value (?,?,?,?,?); `;
+                        value (?,?,?); `;
 
     const res = await conn.query(query, [
       newWeightDate.weight,
@@ -91,3 +91,5 @@ WeightDate.delete = async (id) => {
     if (conn) await conn.release();
   }
 };
+
+module.exports = WeightDate;
