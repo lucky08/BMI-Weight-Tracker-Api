@@ -5,58 +5,47 @@ module.exports.findAllByUserProfileId = async (req, res) => {
   const { userProfileId } = req.params;
 
   try {
-    const weightDates = await WeightDate.getAllByUserProfileId(userProfileId);
+    const [weightDates, userProfile] = await Promise.all([
+      WeightDate.getAllByUserProfileId(userProfileId),
+      UserProfile.findById(userProfileId),
+    ]);
 
-    const userProfile = await UserProfile.findById(userProfileId);
+    const { height, age, gender } = userProfile;
+    const heightInMeters = height / 100;
 
-    for (let weightDate of weightDates) {
-      weightDate.bmi =
-        weightDate.weight /
-        ((userProfile.height / 100) * (userProfile.height / 100));
+    const processedWeightDates = weightDates.map((weightDate) => {
+      const bmi = weightDate.weight / (heightInMeters * heightInMeters);
+      let status;
 
-      if (weightDate.bmi < 16) {
-        weightDate.status = "Severe thinness";
-      } else if (16 <= weightDate.bmi && weightDate.bmi < 17) {
-        weightDate.status = "Moderate thinness";
-      } else if (17 <= weightDate.bmi && weightDate.bmi < 18.5) {
-        weightDate.status = "Mild thinness";
-      } else if (18.5 <= weightDate.bmi && weightDate.bmi < 25) {
-        weightDate.status = "Normal";
-      } else if (25 <= weightDate.bmi && weightDate.bmi < 30) {
-        weightDate.status = "Pre-obese";
-      } else if (30 <= weightDate.bmi && weightDate.bmi < 35) {
-        weightDate.status = "Obese (Class I)";
-      } else if (35 <= weightDate.bmi && weightDate.bmi < 40) {
-        weightDate.status = "Obese (Class II)";
-      } else if (weightDate.bmi >= 40) {
-        weightDate.status = "Obese (Class III)";
+      if (bmi < 16) status = "Severe thinness";
+      else if (bmi < 17) status = "Moderate thinness";
+      else if (bmi < 18.5) status = "Mild thinness";
+      else if (bmi < 25) status = "Normal";
+      else if (bmi < 30) status = "Pre-obese";
+      else if (bmi < 35) status = "Obese (Class I)";
+      else if (bmi < 40) status = "Obese (Class II)";
+      else status = "Obese (Class III)";
+
+      let bodyFatPercentage = null;
+      if (age >= 18) {
+        bodyFatPercentage =
+          1.2 * bmi + 0.23 * age - 10.8 * (gender === "male" ? 1 : 0) - 5.4;
+      } else if (age >= 5) {
+        bodyFatPercentage =
+          1.5 * bmi - 0.7 * age - 3.6 * (gender === "male" ? 1 : 0) + 1.4;
       }
 
-      if (userProfile.age >= 18) {
-        if (userProfile.gender === "female") {
-          weightDate.bodyFatPercentage =
-            1.2 * weightDate.bmi + 0.23 * userProfile.age - 10.8 * 0 - 5.4;
-        } else if (userProfile.gender === "male") {
-          weightDate.bodyFatPercentage =
-            1.2 * weightDate.bmi + 0.23 * userProfile.age - 10.8 * 1 - 5.4;
-        }
-      } else if (userProfile.age >= 5 && userProfile.age < 18) {
-        if (userProfile.gender === "female") {
-          weightDate.bodyFatPercentage =
-            1.5 * weightDate.bmi - 0.7 * userProfile.age - 3.6 * 0 + 1.4;
-        } else if (userProfile.gender === "male") {
-          weightDate.bodyFatPercentage =
-            1.5 * weightDate.bmi - 0.7 * userProfile.age - 3.6 * 1 + 1.4;
-        }
-      }
+      return {
+        ...weightDate,
+        bmi: bmi.toFixed(2),
+        status,
+        bodyFatPercentage: bodyFatPercentage
+          ? bodyFatPercentage.toFixed(2)
+          : null,
+      };
+    });
 
-      weightDate.bmi = parseFloat(weightDate.bmi).toFixed(2);
-      weightDate.bodyFatPercentage = parseFloat(
-        weightDate.bodyFatPercentage
-      ).toFixed(2);
-    }
-
-    return res.status(200).send(weightDates);
+    return res.status(200).send(processedWeightDates);
   } catch (err) {
     console.error(err);
     return res
