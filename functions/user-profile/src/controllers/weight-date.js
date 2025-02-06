@@ -17,9 +17,9 @@ module.exports.findAllByUserProfileId = async (req, res) => {
       const bmi = weightDate.weight / (heightInMeters * heightInMeters);
       let status;
 
-      if (bmi < 16) status = 'Severe thinness';
-      else if (bmi < 17) status = 'Moderate thinness';
-      else if (bmi < 18.5) status = 'Mild thinness';
+      if (bmi < 16) status = 'Severe Thinness';
+      else if (bmi < 17) status = 'Moderate Thinness';
+      else if (bmi < 18.5) status = 'Mild Thinness';
       else if (bmi < 25) status = 'Normal';
       else if (bmi < 30) status = 'Pre-obese';
       else if (bmi < 35) status = 'Obese (Class I)';
