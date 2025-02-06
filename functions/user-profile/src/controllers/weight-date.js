@@ -68,9 +68,10 @@ module.exports.create = async (req, res) => {
 
 module.exports.update = async (req, res) => {
   try {
-    const { weight, dateTime, userProfileId } = req.body;
+    const { id, weight, dateTime, userProfileId } = req.body;
 
     const weightDate = new WeightDate({
+      id,
       weight,
       dateTime,
       userProfileId,

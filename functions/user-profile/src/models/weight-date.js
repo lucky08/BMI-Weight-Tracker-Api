@@ -65,9 +65,9 @@ WeightDate.update = async (updatedWeightDate) => {
                       date_time = ?
                     WHERE id = ?;`;
 
-    await conn.query(query, [updatedWeightDate.weight, updatedWeightDate.dateTime, updatedUserProfile.id]);
+    await conn.query(query, [updatedWeightDate.weight, updatedWeightDate.dateTime, updatedWeightDate.id]);
 
-    return updatedUserProfile;
+    return updatedWeightDate;
   } finally {
     if (conn) await conn.release();
   }
