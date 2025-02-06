@@ -1,4 +1,4 @@
-const { getConnection } = require("../utils/database");
+const { getConnection } = require('../utils/database');
 
 const Device = function (device) {
   this.id = device.id;

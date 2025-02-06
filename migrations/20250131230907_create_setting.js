@@ -3,15 +3,11 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("setting", function (table) {
-    table.bigincrements("id").primary();
-    table.string("unit", 255);
-    table.boolean("dark_mode").defaultTo(false);
-    table
-      .string("uuid", 255)
-      .notNullable()
-      .references("uuid")
-      .inTable("device");
+  return knex.schema.createTable('setting', function (table) {
+    table.bigincrements('id').primary();
+    table.string('unit', 255);
+    table.boolean('dark_mode').defaultTo(false);
+    table.string('uuid', 255).notNullable().references('uuid').inTable('device');
   });
 };
 
@@ -20,5 +16,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("setting");
+  return knex.schema.dropTableIfExists('setting');
 };

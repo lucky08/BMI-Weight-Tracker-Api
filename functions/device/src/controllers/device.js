@@ -1,4 +1,4 @@
-const Device = require("../models/device");
+const Device = require('../models/device');
 
 module.exports.findAll = async (req, res) => {
   try {
@@ -6,9 +6,7 @@ module.exports.findAll = async (req, res) => {
     return res.status(200).send(devices);
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .send(JSON.parse("Error while retrieving all devices"));
+    return res.status(500).send(JSON.parse('Error while retrieving all devices'));
   }
 };
 
@@ -20,11 +18,9 @@ module.exports.findOneByUuid = async (req, res) => {
   } catch (err) {
     console.log(err);
 
-    const wasNotFound = err.message === "not_found";
+    const wasNotFound = err.message === 'not_found';
     const status = wasNotFound ? 404 : 500;
-    const message = wasNotFound
-      ? "Device not found."
-      : err.message || "Error while retrieving device by uuid.";
+    const message = wasNotFound ? 'Device not found.' : err.message || 'Error while retrieving device by uuid.';
 
     return res.status(status).send({ message });
   }
@@ -32,16 +28,7 @@ module.exports.findOneByUuid = async (req, res) => {
 
 module.exports.create = async (req, res) => {
   try {
-    const {
-      uuid,
-      isVirtual,
-      model,
-      operatingSystem,
-      osVersion,
-      platform,
-      webViewVersion,
-      manufacturer,
-    } = req.body;
+    const { uuid, isVirtual, model, operatingSystem, osVersion, platform, webViewVersion, manufacturer } = req.body;
 
     const device = new Device({
       uuid,
@@ -58,8 +45,6 @@ module.exports.create = async (req, res) => {
     return res.status(201).send(createdDevice);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .send(JSON.parse("Error while creating device by id."));
+    return res.status(500).send(JSON.parse('Error while creating device by id.'));
   }
 };

@@ -1,4 +1,4 @@
-const { getConnection } = require("../utils/database");
+const { getConnection } = require('../utils/database');
 
 const Setting = function (setting) {
   this.id = setting.id;
@@ -36,11 +36,7 @@ Setting.create = async (newSetting) => {
     const query = `INSERT INTO setting(unit, dark_mode, uuid)
                         value (?,?,?); `;
 
-    const res = await conn.query(query, [
-      newSetting.unit,
-      newSetting.darkMode,
-      newSetting.uuid,
-    ]);
+    const res = await conn.query(query, [newSetting.unit, newSetting.darkMode, newSetting.uuid]);
 
     const settingQuery = `SELECT
                             id,
@@ -69,11 +65,7 @@ Setting.updateByUuid = async (updatedSetting) => {
                       dark_mode = ?
                     WHERE uuid = ?;`;
 
-    await conn.query(query, [
-      updatedSetting.unit,
-      updatedSetting.darkMode,
-      updatedSetting.uuid,
-    ]);
+    await conn.query(query, [updatedSetting.unit, updatedSetting.darkMode, updatedSetting.uuid]);
 
     return updatedSetting;
   } finally {

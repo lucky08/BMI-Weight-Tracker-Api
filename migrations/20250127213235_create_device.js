@@ -3,17 +3,17 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("device", function (table) {
-    table.bigincrements("id").primary();
+  return knex.schema.createTable('device', function (table) {
+    table.bigincrements('id').primary();
 
-    table.string("uuid", 255).notNullable();
-    table.boolean("is_virtual").defaultTo(false);
-    table.string("model", 200);
-    table.string("operating_system", 200);
-    table.string("os_version", 200);
-    table.string("platform", 200);
-    table.string("web_view_version", 200);
-    table.string("manufacturer", 200);
+    table.string('uuid', 255).notNullable();
+    table.boolean('is_virtual').defaultTo(false);
+    table.string('model', 200);
+    table.string('operating_system', 200);
+    table.string('os_version', 200);
+    table.string('platform', 200);
+    table.string('web_view_version', 200);
+    table.string('manufacturer', 200);
   });
 };
 
@@ -22,5 +22,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("device");
+  return knex.schema.dropTableIfExists('device');
 };

@@ -1,4 +1,4 @@
-const { getConnection } = require("../utils/database");
+const { getConnection } = require('../utils/database');
 
 const UserProfile = function (userProfile) {
   this.id = userProfile.id;

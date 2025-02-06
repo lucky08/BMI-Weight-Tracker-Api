@@ -1,9 +1,9 @@
-require("dotenv").config();
+require('dotenv').config();
 
 // Update with your config settings.
 module.exports = {
   development: {
-    client: "mysql",
+    client: 'mysql',
     connection: {
       host: process.env.DATABASE_HOST,
       port: process.env.DATABASE_PORT,
@@ -16,7 +16,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: "knex_migrations",
+      tableName: 'knex_migrations',
     },
   },
 };

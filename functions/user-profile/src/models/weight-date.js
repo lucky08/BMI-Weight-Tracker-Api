@@ -1,4 +1,4 @@
-const { getConnection } = require("../utils/database");
+const { getConnection } = require('../utils/database');
 
 const WeightDate = function (weightDate) {
   this.id = weightDate.id;
@@ -37,11 +37,7 @@ WeightDate.create = async (newWeightDate) => {
     const query = `INSERT INTO weight_date(weight, date_time, user_profile_id)
                         value (?,?,?); `;
 
-    const res = await conn.query(query, [
-      newWeightDate.weight,
-      newWeightDate.dateTime,
-      newWeightDate.userProfileId,
-    ]);
+    const res = await conn.query(query, [newWeightDate.weight, newWeightDate.dateTime, newWeightDate.userProfileId]);
 
     const weightDateQuery = `SELECT id,
                           weight,
@@ -69,11 +65,7 @@ WeightDate.update = async (updatedWeightDate) => {
                       date_time = ?
                     WHERE id = ?;`;
 
-    await conn.query(query, [
-      updatedWeightDate.weight,
-      updatedWeightDate.dateTime,
-      updatedUserProfile.id,
-    ]);
+    await conn.query(query, [updatedWeightDate.weight, updatedWeightDate.dateTime, updatedUserProfile.id]);
 
     return updatedUserProfile;
   } finally {

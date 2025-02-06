@@ -1,5 +1,5 @@
-const mariadb = require("mariadb");
-require("dotenv").config();
+const mariadb = require('mariadb');
+require('dotenv').config();
 
 let pool = null;
 BigInt.prototype.toJSON = function () {
@@ -12,10 +12,10 @@ BigInt.prototype.toJSON = function () {
 let getConnection = async () => {
   try {
     let e = new Error();
-    let frame = e.stack.split("\n")[2]; // change to 3 for grandparent func
-    let lineNumber = frame.split(":").reverse()[1];
-    let functionName = frame.split(" ")[5];
-    console.log(functionName + ":" + lineNumber);
+    let frame = e.stack.split('\n')[2]; // change to 3 for grandparent func
+    let lineNumber = frame.split(':').reverse()[1];
+    let functionName = frame.split(' ')[5];
+    console.log(functionName + ':' + lineNumber);
 
     if (!pool) {
       let connectionConfig = {
@@ -25,7 +25,7 @@ let getConnection = async () => {
         ssl: { rejectUnauthorized: false },
         password: process.env.DATABASE_PASSWORD,
         authSwitchHandler: function () {
-          console.log("Setting new auth handler.");
+          console.log('Setting new auth handler.');
         },
         bigIntAsNumber: true,
         connectionLimit: 2,
@@ -35,9 +35,9 @@ let getConnection = async () => {
       };
       // Adding the mysql_clear_password handler
       connectionConfig.authSwitchHandler = (data, cb) => {
-        if (data.pluginName === "mysql_clear_password") {
-          console.log("pluginName: " + data.pluginName);
-          let password = process.env.DATABASE_PASSWORD + "\0";
+        if (data.pluginName === 'mysql_clear_password') {
+          console.log('pluginName: ' + data.pluginName);
+          let password = process.env.DATABASE_PASSWORD + '\0';
           cb(null, password);
         }
       };
@@ -45,15 +45,15 @@ let getConnection = async () => {
       pool = mariadb.createPool(connectionConfig);
       await new Promise((resolve) => setTimeout(resolve, 100));
       if (pool.totalConnections() < 1) {
-        console.log("requesting a new pool");
+        console.log('requesting a new pool');
         await new Promise((resolve) => setTimeout(resolve, 50));
         pool = mariadb.createPool(connectionConfig);
       }
     }
     // Log
-    console.log("Total connections: ", pool.totalConnections());
-    console.log("Active connections: ", pool.activeConnections());
-    console.log("Idle connections: ", pool.idleConnections());
+    console.log('Total connections: ', pool.totalConnections());
+    console.log('Active connections: ', pool.activeConnections());
+    console.log('Idle connections: ', pool.idleConnections());
 
     return await pool.getConnection();
   } catch (e) {
@@ -68,7 +68,7 @@ let getConnection = async () => {
  */
 let generateSQLSet = (arr) => {
   arr = arr.filter((item) => item);
-  return arr.length === 1 ? `(${arr[0]})` : `(${arr.join(", ")})`;
+  return arr.length === 1 ? `(${arr[0]})` : `(${arr.join(', ')})`;
 };
 
 /**

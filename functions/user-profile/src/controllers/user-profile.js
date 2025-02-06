@@ -1,4 +1,4 @@
-const UserProfile = require("../models/user-profile");
+const UserProfile = require('../models/user-profile');
 
 module.exports.findAll = async (req, res) => {
   try {
@@ -6,9 +6,7 @@ module.exports.findAll = async (req, res) => {
     return res.status(200).send(userProfiles);
   } catch (err) {
     console.error(err);
-    return res
-      .status(500)
-      .send(JSON.parse("Error while retrieving all userProfiles"));
+    return res.status(500).send(JSON.parse('Error while retrieving all userProfiles'));
   }
 };
 
@@ -20,11 +18,11 @@ module.exports.findOneByUuid = async (req, res) => {
   } catch (err) {
     console.log(err);
 
-    const wasNotFound = err.message === "not_found";
+    const wasNotFound = err.message === 'not_found';
     const status = wasNotFound ? 404 : 500;
     const message = wasNotFound
-      ? "User Profile not found."
-      : err.message || "Error while retrieving user profile by uuid.";
+      ? 'User Profile not found.'
+      : err.message || 'Error while retrieving user profile by uuid.';
 
     return res.status(status).send({ message });
   }
@@ -46,9 +44,7 @@ module.exports.create = async (req, res) => {
     return res.status(201).send(createdUserProfile);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .send(JSON.parse("Error while creating user profile by id."));
+    return res.status(500).send(JSON.parse('Error while creating user profile by id.'));
   }
 };
 
@@ -68,8 +64,6 @@ module.exports.update = async (req, res) => {
     return res.status(201).send(updatedUserProfile);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .send(JSON.parse("Error while updating user profile by id."));
+    return res.status(500).send(JSON.parse('Error while updating user profile by id.'));
   }
 };

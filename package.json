@@ -40,6 +40,9 @@
     "serve:prod": "node app.js",
     "migrate:latest": "knex migrate:latest"
   },
+  "pre-commit": [
+    "pretty:check"
+  ],
   "devDependencies": {
     "@types/eslint": "^9.6.1",
     "@types/faker": "^6.6.11",
