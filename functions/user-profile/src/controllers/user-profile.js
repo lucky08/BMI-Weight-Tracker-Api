@@ -6,7 +6,7 @@ module.exports.findAll = async (req, res) => {
     return res.status(200).send(userProfiles);
   } catch (err) {
     console.error(err);
-    return res.status(500).send(JSON.parse('Error while retrieving all userProfiles'));
+    return res.status(500).send(JSON.parse('Error while retrieving all user profiles'));
   }
 };
 
@@ -21,7 +21,7 @@ module.exports.findOneByUuid = async (req, res) => {
     const wasNotFound = err.message === 'not_found';
     const status = wasNotFound ? 404 : 500;
     const message = wasNotFound
-      ? 'User Profile not found.'
+      ? 'User profile not found.'
       : err.message || 'Error while retrieving user profile by uuid.';
 
     return res.status(status).send({ message });
@@ -44,7 +44,7 @@ module.exports.create = async (req, res) => {
     return res.status(201).send(createdUserProfile);
   } catch (err) {
     console.log(err);
-    return res.status(500).send(JSON.parse('Error while creating user profile by id.'));
+    return res.status(500).send(JSON.parse('Error while creating user profile.'));
   }
 };
 

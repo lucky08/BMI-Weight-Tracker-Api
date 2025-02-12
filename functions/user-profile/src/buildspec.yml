@@ -35,7 +35,7 @@ phases:
   # - command
   build:
     commands:
-      - cd functions/device
+      - cd functions/user-profile
       - sam build
       - sam package --s3-bucket bmi-weight-tracker-lambda-deploy --output-template-file outputtemplate.yml
       # - command
@@ -65,5 +65,5 @@ phases:
 artifacts:
   type: zip
   files:
-    - functions/device/template.yaml
-    - functions/device/outputtemplate.yml
+    - functions/user-profile/template.yaml
+    - functions/user-profile/outputtemplate.yml

@@ -44,7 +44,7 @@ module.exports.findAllByUserProfileId = async (req, res) => {
     return res.status(200).send(processedWeightDates);
   } catch (err) {
     console.error(err);
-    return res.status(500).send(JSON.parse('Error while retrieving all weightDates'));
+    return res.status(500).send(JSON.parse('Error while retrieving all weight dates'));
   }
 };
 
@@ -62,7 +62,7 @@ module.exports.create = async (req, res) => {
     return res.status(201).send(createdWeightDate);
   } catch (err) {
     console.log(err);
-    return res.status(500).send(JSON.parse('Error while creating weight date by id.'));
+    return res.status(500).send(JSON.parse('Error while creating weight date.'));
   }
 };
 
@@ -91,14 +91,14 @@ module.exports.delete = async (req, res) => {
   try {
     await WeightDate.delete(id);
 
-    return res.status(200).send({ message: 'Weight Date removed successfully!' });
+    return res.status(200).send({ message: 'Weight date removed successfully!' });
   } catch (err) {
     console.error(err);
 
     const wasNotFound = err.kind === 'not_found';
 
     const status = wasNotFound ? 404 : 500;
-    const message = wasNotFound ? 'Weight Date not found.' : err.message || 'Error while deleting the Weight Date.';
+    const message = wasNotFound ? 'Weight date not found.' : err.message || 'Error while deleting the Weight date.';
 
     return res.status(status).send({ message });
   }
