@@ -4,10 +4,10 @@ const process = require('process');
 const app = express();
 require('dotenv').config();
 
-const deviceRoutes = require('./functions/device/src/routes/device');
-const settingRoutes = require('./functions/device/src/routes/setting');
-const userProfileRoutes = require('./functions/user-profile/src/routes/user-profile');
-const weightDateRoutes = require('./functions/user-profile/src/routes/weight-date');
+const deviceRoutes = require('./functions/main/src/routes/device');
+const settingRoutes = require('./functions/main/src/routes/setting');
+const userProfileRoutes = require('./functions/main/src/routes/user-profile');
+const weightDateRoutes = require('./functions/main/src/routes/weight-date');
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: false, limit: '5mb' }));

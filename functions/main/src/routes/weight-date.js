@@ -3,7 +3,7 @@ const WeightDateController = require('../controllers/weight-date');
 
 const router = express.Router();
 
-router.get('/:userProfileId', WeightDateController.findAllByUserProfileId);
+router.get('/all/:userProfileId', WeightDateController.findAllByUserProfileId);
 
 router.post('/', WeightDateController.create);
 
