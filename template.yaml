@@ -18,7 +18,7 @@ Resources:
   BMIWeightTrackerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: functions/src/
+      CodeUri: functions/main/src/
       Handler: lambda.handler
       Runtime: nodejs18.x
       VpcConfig:
@@ -131,4 +131,4 @@ Outputs:
     Value: !GetAtt BMIWeightTrackerFunction.Arn
   BMIWeightTrackerApiUrl:
     Description: "BMI Weight Tracker API Gateway URL"
-    Value: !Sub "https://${BMIWeightTrackerApi}.execute-api.${AWS::Region}.amazonaws.com/prod/"
+    Value: !Sub "https://${BMIWeightTrackerApi}.execute-api.${AWS::Region}.amazonaws.com/"
