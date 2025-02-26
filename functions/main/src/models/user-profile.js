@@ -25,7 +25,6 @@ UserProfile.getAll = async () => {
                   FROM user_profile;`;
 
     const rows = await conn.query(query);
-
     return rows;
   } finally {
     if (conn) await conn.release();

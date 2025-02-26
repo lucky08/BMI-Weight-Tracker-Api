@@ -16,7 +16,8 @@ let getConnection = async () => {
     let lineNumber = frame.split(':').reverse()[1];
     let functionName = frame.split(' ')[5];
     console.log(functionName + ':' + lineNumber);
-
+    console.log('util process env DATABASE_HOST !!!');
+    console.log(process.env.DATABASE_HOST);
     if (!pool) {
       let connectionConfig = {
         host: process.env.DATABASE_HOST, // RDS Proxy endpoint
