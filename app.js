@@ -1,7 +1,9 @@
 const express = require('express');
+const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const process = require('process');
 
 const app = express();
+app.use(awsServerlessExpressMiddleware.eventContext());
 require('dotenv').config();
 
 const deviceRoutes = require('./functions/main/src/routes/device');
@@ -17,6 +19,18 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
   res.setHeader('withCredentials', '*');
+
+  if (req.apiGateway && req.apiGateway.event) {
+    const event = req.apiGateway.event;
+    if (event && event.stageVariables) {
+      process.env['DATABASE_HOST'] = event.stageVariables.DATABASE_HOST;
+      process.env['DATABASE_DB'] = event.stageVariables.DATABASE_DB;
+      process.env['DATABASE_USER'] = event.stageVariables.DATABASE_USER;
+      process.env['DATABASE_PORT'] = event.stageVariables.DATABASE_PORT;
+      process.env['DATABASE_PASSWORD'] = event.stageVariables.DATABASE_PASSWORD;
+    }
+  }
+
   next();
 });
 

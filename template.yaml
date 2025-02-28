@@ -18,7 +18,7 @@ Resources:
   BMIWeightTrackerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: functions/main/src/
+      CodeUri: ./
       Handler: lambda.handler
       Runtime: nodejs18.x
       VpcConfig:
